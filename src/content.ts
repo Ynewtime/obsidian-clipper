@@ -171,7 +171,7 @@ declare global {
 		metaTags: { name?: string | null; property?: string | null; content: string | null }[];
 	}
 
-	browser.runtime.onMessage.addListener((request: any, sender, sendResponse) => {
+	browser.runtime.onMessage.addListener(((request: any, sender, sendResponse) => {
 		if (request.action === "ping") {
 			sendResponse({});
 			return true;
@@ -388,7 +388,7 @@ declare global {
 			return true;
 		}
 		return true;
-	});
+	}) as browser.Runtime.OnMessageListener);
 
 	function extractContentBySelector(selector: string, attribute?: string, extractHtml: boolean = false): string | string[] {
 		try {
