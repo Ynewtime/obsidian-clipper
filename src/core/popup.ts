@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { Template, Property, PromptVariable } from '../types/types';
 import { incrementStat, addHistoryEntry, getClipHistory } from '../utils/storage-utils';
 import { generateFrontmatter, saveToObsidian } from '../utils/obsidian-note-creator';
-import { extractPageContent, initializePageContent, preloadImages } from '../utils/content-extractor';
+import { extractPageContent, initializePageContent } from '../utils/content-extractor';
 import { compileTemplate } from '../utils/template-compiler';
 import { initializeIcons, getPropertyTypeIcon } from '../icons/icons';
 import { decompressFromUTF16 } from 'lz-string';
@@ -601,31 +601,6 @@ function showError(messageKey: string): void {
 		clipper.style.display = 'none';
 
 		document.body.classList.add('has-error');
-	}
-}
-
-function showLoading(message: string): void {
-	const errorMessage = document.querySelector('.error-message') as HTMLElement;
-	const clipper = document.querySelector('.clipper') as HTMLElement;
-
-	if (errorMessage && clipper) {
-		errorMessage.textContent = message;
-		errorMessage.style.display = 'flex';
-		clipper.style.display = 'none';
-
-		document.body.classList.add('has-loading');
-	}
-}
-
-function clearLoading(): void {
-	const errorMessage = document.querySelector('.error-message') as HTMLElement;
-	const clipper = document.querySelector('.clipper') as HTMLElement;
-
-	if (errorMessage && clipper) {
-		errorMessage.style.display = 'none';
-		clipper.style.display = 'block';
-
-		document.body.classList.remove('has-loading');
 	}
 }
 function clearError(): void {
@@ -1256,7 +1231,6 @@ function determineMainAction() {
 			mainButton.onclick = () => copyContent();
 			// Add direct actions to secondary
 			addSecondaryAction(secondaryActions, 'addToObsidian', () => handleClipObsidian());
-			addSecondaryAction(secondaryActions, 'addToObsidianWithLoadingImages', () => handleClipObsidian(true));
 			addSecondaryAction(secondaryActions, 'saveFile', handleSaveToDownloads);
 			break;
 		case 'saveFile':
@@ -1264,20 +1238,18 @@ function determineMainAction() {
 			mainButton.onclick = () => handleSaveToDownloads();
 			// Add direct actions to secondary
 			addSecondaryAction(secondaryActions, 'addToObsidian', () => handleClipObsidian());
-			addSecondaryAction(secondaryActions, 'addToObsidianWithLoadingImages', () => handleClipObsidian(true));
 			addSecondaryAction(secondaryActions, 'copyToClipboard', copyContent);
 			break;
 		default: // 'addToObsidian'
 			mainButton.textContent = getMessage('addToObsidian');
 			mainButton.onclick = () => handleClipObsidian();
 			// Add direct actions to secondary
-			addSecondaryAction(secondaryActions, 'addToObsidianWithLoadingImages', () => handleClipObsidian(true));
 			addSecondaryAction(secondaryActions, 'copyToClipboard', copyContent);
 			addSecondaryAction(secondaryActions, 'saveFile', handleSaveToDownloads);
 	}
 }
 
-async function handleClipObsidian(preloadImagesOption: boolean = false): Promise<void> {
+async function handleClipObsidian(): Promise<void> {
 	if (!currentTemplate) return;
 
 	const vaultDropdown = document.getElementById('vault-select') as HTMLSelectElement;
@@ -1299,53 +1271,6 @@ async function handleClipObsidian(preloadImagesOption: boolean = false): Promise
 			} else if (!interpretBtn.classList.contains('done')) {
 				interpretBtn.click();
 				await waitForInterpreter(interpretBtn);
-			}
-		}
-
-		// Preload images by scrolling through the page before clipping (only if option is enabled)
-		if (preloadImagesOption && currentTabId) {
-			showLoading(getMessage('loadingImages'));
-			try {
-				await preloadImages(currentTabId);
-				// Re-extract content after images are loaded
-				const extractedData = await extractPageContent(currentTabId);
-				if (extractedData) {
-					const tab = await getTabInfo(currentTabId);
-					const currentUrl = tab.url;
-					const initializedContent = await initializePageContent(
-						extractedData.content,
-						extractedData.selectedHtml,
-						extractedData.extractedContent,
-						currentUrl,
-						extractedData.schemaOrgData,
-						extractedData.fullHtml,
-						extractedData.highlights || [],
-						extractedData.title,
-						extractedData.author,
-						extractedData.description,
-						extractedData.favicon,
-						extractedData.image,
-						extractedData.published,
-						extractedData.site,
-						extractedData.wordCount,
-						extractedData.metaTags
-					);
-					if (initializedContent) {
-						// Update the note content field with the new content
-						const compiledContent = await memoizedCompileTemplate(
-							currentTabId,
-							currentTemplate.noteContentFormat,
-							initializedContent.currentVariables,
-							currentUrl
-						);
-						noteContentField.value = compiledContent;
-					}
-				}
-			} catch (error) {
-				console.error('Error preloading images:', error);
-				// Continue with existing content if preload fails
-			} finally {
-				clearLoading();
 			}
 		}
 
@@ -1419,7 +1344,6 @@ function getActionIcon(actionType: string): string {
 		case 'copyToClipboard': return 'copy';
 		case 'saveFile': return 'file-down';
 		case 'addToObsidian': return 'pen-line';
-		case 'addToObsidianWithLoadingImages': return 'images';
 		default: return 'plus';
 	}
 }
