@@ -11,6 +11,7 @@ export function showSettingsSection(section: SettingsSection, templateId?: strin
 
 	sections.forEach(s => s.classList.remove('active'));
 	sidebarItems.forEach(item => item.classList.remove('active'));
+	document.querySelectorAll('#template-list li').forEach(item => item.classList.remove('active'));
 
 	const selectedSection = document.getElementById(`${section}-section`);
 	const selectedSidebarItem = document.querySelector(`#sidebar li[data-section="${section}"]`);
