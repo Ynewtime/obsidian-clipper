@@ -436,19 +436,14 @@ export function createMarkdownContent(content: string, url: string) {
 		},
 		replacement: (content, node) => {
 			if (!(node instanceof HTMLElement)) return content;
-			
+
 			const codeElement = node.querySelector('code');
 			if (!codeElement) return content;
-			
+
 			const language = codeElement.getAttribute('data-lang') || '';
 			const code = codeElement.textContent || '';
-			
-			// Clean up the content and escape backticks
-			const cleanCode = code
-				.trim()
-				.replace(/`/g, '\\`');
-			
-			return `\n\`\`\`${language}\n${cleanCode}\n\`\`\`\n`;
+
+			return `\n\`\`\`${language}\n${code.trim()}\n\`\`\`\n`;
 		}
 	});
 
