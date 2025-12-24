@@ -15,7 +15,9 @@ export function unescapeValue(value: string): string {
 }
 
 export function escapeDoubleQuotes(str: string): string {
-	return str.replace(/"/g, '\\"');
+	// In YAML double-quoted strings, backslash is an escape character
+	// Must escape backslashes first, then double quotes
+	return str.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
 }
 
 export function sanitizeFileName(fileName: string): string {
