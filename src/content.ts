@@ -54,6 +54,7 @@ declare global {
 		const iframe = document.createElement('iframe');
 		iframe.id = iframeId;
 		iframe.src = browser.runtime.getURL('side-panel.html?context=iframe');
+		iframe.allow = 'clipboard-write';
 		container.appendChild(iframe);
 
 		// Add resize handle (left side only)
