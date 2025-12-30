@@ -26,6 +26,9 @@
 	"advanced": {
 		"message": "高级"
 	},
+	"aiAnalyzePage": {
+		"message": "AI 分析页面并生成模板"
+	},
 	"aiGenerateTemplate": {
 		"message": "AI 分析页面"
 	},

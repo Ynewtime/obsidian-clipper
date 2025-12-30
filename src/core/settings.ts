@@ -24,7 +24,7 @@ import { addBrowserClassToHtml } from '../utils/browser-detection';
 import { initializeMenu } from '../managers/menu';
 import { addMenuItemListener } from '../managers/menu';
 import { translatePage, getCurrentLanguage, setLanguage, getAvailableLanguages, getMessage, setupLanguageAndDirection } from '../utils/i18n';
-import { initializeAITemplateGenerator, showAITemplateModal, handleCreateBlogTemplate } from '../managers/ai-template-manager';
+import { handleCreateBlogTemplate } from '../managers/ai-template-manager';
 
 declare global {
 	interface Window {
@@ -156,11 +156,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 		addMenuItemListener('.export-template-btn', 'template-actions-menu', exportTemplate);
 		addMenuItemListener('.import-template-btn', 'template-actions-menu', showTemplateImportModal);
 		addMenuItemListener('#copy-template-json-btn', 'template-actions-menu', copyCurrentTemplateToClipboard);
-		addMenuItemListener('#ai-generate-template-btn', 'template-actions-menu', showAITemplateModal);
 		addMenuItemListener('#create-blog-template-btn', 'template-actions-menu', handleCreateBlogTemplate);
-
-		// Initialize AI template generator
-		initializeAITemplateGenerator();
 	}
 
 	function duplicateCurrentTemplate(): void {

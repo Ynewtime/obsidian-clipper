@@ -26,6 +26,9 @@
 	"advanced": {
 		"message": "Advanced"
 	},
+	"aiAnalyzePage": {
+		"message": "AI analyze page and generate template"
+	},
 	"aiGenerateTemplate": {
 		"message": "AI analyze page"
 	},

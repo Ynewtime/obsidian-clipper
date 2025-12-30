@@ -476,14 +476,6 @@
 											</div>
 										</div>
 										<div class="menu-separator"></div>
-										<div class="menu-item" id="ai-generate-template-btn">
-											<div class="menu-item-icon">
-												<i data-lucide="sparkles"></i>
-											</div>
-											<div class="menu-item-title" data-i18n="aiGenerateTemplate">
-												AI analyze page
-											</div>
-										</div>
 										<div class="menu-item" id="create-blog-template-btn">
 											<div class="menu-item-icon">
 												<i data-lucide="notebook-pen"></i>
@@ -718,50 +710,6 @@
 				<div class="modal-button-container">
 					<a class="btn mod-cta" href="https://help.obsidian.md/web-clipper/troubleshoot" target="_blank" data-i18n="help">Help</a>
 					<button class="feedback-close-btn" data-i18n="close">Close</button>
-				</div>
-			</div>
-		</div>
-
-		<div id="ai-template-modal" class="modal-container">
-			<div class="modal-bg"></div>
-			<div class="modal" style="max-width: 600px;">
-				<div class="modal-header">
-					<div class="modal-title" data-i18n="aiTemplateTitle">AI Template Generator</div>
-				</div>
-				<div class="modal-content">
-					<div class="setting-item">
-						<div class="setting-item-info">
-							<label for="ai-template-url" data-i18n="pageUrl">Page URL</label>
-							<div class="setting-item-description" data-i18n="aiTemplateUrlDescription">Enter the URL of a page to analyze. The AI will suggest CSS selectors for extracting content.</div>
-						</div>
-						<div class="setting-item-control">
-							<input type="text" id="ai-template-url" placeholder="https://example.com/article" style="width: 100%;" />
-						</div>
-					</div>
-					<div class="setting-item">
-						<div class="setting-item-info">
-							<label for="ai-template-model" data-i18n="model">Model</label>
-							<div class="setting-item-description" data-i18n="aiTemplateModelDescription">Select the AI model to use for analysis.</div>
-						</div>
-						<div class="setting-item-control">
-							<select id="ai-template-model"></select>
-						</div>
-					</div>
-					<div id="ai-template-result" style="display: none;">
-						<h4 data-i18n="analysisResult">Analysis Result</h4>
-						<pre id="ai-template-result-content" style="background: var(--background-secondary); padding: 12px; border-radius: 6px; overflow: auto; max-height: 300px; font-size: 12px; white-space: pre-wrap;"></pre>
-					</div>
-					<div id="ai-template-error" class="warning-container" style="display: none;">
-						<div class="warning-icon">
-							<i data-lucide="alert-triangle"></i>
-						</div>
-						<div class="warning-text" id="ai-template-error-text"></div>
-					</div>
-				</div>
-				<div class="modal-button-container">
-					<button id="ai-template-analyze-btn" class="mod-cta" data-i18n="analyze">Analyze</button>
-					<button id="ai-template-apply-btn" class="mod-cta" style="display: none;" data-i18n="applyToTemplate">Apply to template</button>
-					<button class="ai-template-cancel-btn" data-i18n="cancel">Cancel</button>
 				</div>
 			</div>
 		</div>

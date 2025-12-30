@@ -23,6 +23,9 @@ import { debounce } from '../utils/debounce';
 import { sanitizeFileName } from '../utils/string-utils';
 import { saveFile } from '../utils/file-utils';
 import { translatePage, getMessage, setupLanguageAndDirection } from '../utils/i18n';
+import { analyzePageForTemplate, createTemplateFromAnalysis, formatAnalysisSummary } from '../utils/template-generator';
+import { getDomain } from '../utils/string-utils';
+import { saveTemplateSettings } from '../managers/template-manager';
 
 interface ReaderModeResponse {
 	success: boolean;
@@ -557,6 +560,14 @@ function setupEventListeners(tabId: number) {
 	const readerModeButton = document.getElementById('reader-mode');
 	if (readerModeButton) {
 		readerModeButton.addEventListener('click', () => toggleReaderMode(tabId));
+	}
+
+	const aiAnalyzeButton = document.getElementById('ai-analyze-page');
+	if (aiAnalyzeButton) {
+		aiAnalyzeButton.addEventListener('click', (e) => {
+			e.preventDefault();
+			handleAIAnalyzePage(tabId);
+		});
 	}
 }
 
@@ -1362,6 +1373,86 @@ async function copyContent() {
 	const frontmatter = await generateFrontmatter(properties);
 	const fileContent = frontmatter + noteContentField.value;
 	await copyToClipboard(fileContent);
+}
+
+/**
+ * Handles AI analysis of the current page to generate a template
+ */
+async function handleAIAnalyzePage(tabId: number): Promise<void> {
+	const aiButton = document.getElementById('ai-analyze-page');
+
+	// Check if interpreter is enabled
+	if (!generalSettings.interpreterEnabled) {
+		alert(getMessage('interpreterNotEnabled') || 'Please enable the Interpreter in settings first.');
+		return;
+	}
+
+	// Check if there are any enabled models
+	const enabledModels = generalSettings.models.filter(m => m.enabled);
+	if (enabledModels.length === 0) {
+		alert(getMessage('noModelsConfigured') || 'No models configured. Please add a model in Interpreter settings.');
+		return;
+	}
+
+	// Get the model to use
+	const modelConfig = enabledModels.find(m => m.id === generalSettings.interpreterModel) || enabledModels[0];
+	if (!modelConfig) {
+		alert(getMessage('modelNotFound') || 'Model not found.');
+		return;
+	}
+
+	// Show loading state
+	if (aiButton) {
+		aiButton.classList.add('is-loading');
+	}
+
+	try {
+		// Get the current page's HTML
+		const extractedData = await memoizedExtractPageContent(tabId);
+		if (!extractedData || !extractedData.fullHtml) {
+			throw new Error('Failed to extract page content');
+		}
+
+		const tab = await getTabInfo(tabId);
+		const domain = getDomain(tab.url);
+
+		// Analyze the page using AI
+		const analysisResult = await analyzePageForTemplate(extractedData.fullHtml, modelConfig);
+
+		// Create a new template from the analysis
+		const templateName = `${domain} Template`;
+		const newTemplate = createTemplateFromAnalysis(analysisResult, templateName, domain);
+
+		// Add the template to the list
+		templates.unshift(newTemplate);
+
+		// Save and update UI
+		await saveTemplateSettings();
+
+		// Repopulate template dropdown and select the new template
+		populateTemplateDropdown();
+		const templateDropdown = document.getElementById('template-select') as HTMLSelectElement;
+		if (templateDropdown) {
+			templateDropdown.value = newTemplate.id;
+		}
+
+		// Apply the new template
+		currentTemplate = newTemplate;
+		await setLocalStorage('lastSelectedTemplate', newTemplate.id);
+		await refreshFields(tabId);
+
+		// Show success message
+		console.log('AI analysis complete:', formatAnalysisSummary(analysisResult));
+
+	} catch (error) {
+		console.error('Error analyzing page:', error);
+		alert(error instanceof Error ? error.message : 'An error occurred while analyzing the page');
+	} finally {
+		// Remove loading state
+		if (aiButton) {
+			aiButton.classList.remove('is-loading');
+		}
+	}
 }
 
 // Update the resize event listener to use the debounced version
