@@ -26,6 +26,18 @@
 	"advanced": {
 		"message": "Advanced"
 	},
+	"aiGenerateTemplate": {
+		"message": "AI analyze page"
+	},
+	"aiTemplateModelDescription": {
+		"message": "Select the AI model to use for analysis."
+	},
+	"aiTemplateTitle": {
+		"message": "AI Template Generator"
+	},
+	"aiTemplateUrlDescription": {
+		"message": "Enter the URL of a page to analyze. The AI will suggest CSS selectors for extracting content."
+	},
 	"allProperties": {
 		"message": "All properties"
 	},
@@ -49,6 +61,18 @@
 	},
 	"appendToExisting": {
 		"message": "Add to an existing note, at the bottom"
+	},
+	"applyToTemplate": {
+		"message": "Apply to template"
+	},
+	"analyze": {
+		"message": "Analyze"
+	},
+	"analysisResult": {
+		"message": "Analysis Result"
+	},
+	"analyzing": {
+		"message": "Analyzing..."
 	},
 	"autoRunInterpreter": {
 		"message": "Automatically run"
@@ -126,6 +150,12 @@
 	},
 	"confirmReplaceSettings": {
 		"message": "This will replace all your current settings, including templates and properties. Are you sure you want to continue?"
+	},
+	"blogTemplateName": {
+		"message": "Blog"
+	},
+	"createBlogTemplate": {
+		"message": "Create blog template"
 	},
 	"copied": {
 		"message": "Copied!"
@@ -316,6 +346,9 @@
 	"failedToSaveProvider": {
 		"message": "Failed to save provider. Please try again."
 	},
+	"failedToSaveTemplate": {
+		"message": "Failed to save template. Please try again."
+	},
 	"feedback": {
 		"message": "Feedback"
 	},
@@ -422,6 +455,9 @@
 			}
 		}
 	},
+	"interpreterNotEnabled": {
+		"message": "Please enable the Interpreter in settings first."
+	},
 	"language": {
 		"message": "Language"
 	},
@@ -458,6 +494,12 @@
 	"modelRequiredFields": {
 		"message": "Model name, Provider, and Model ID are required."
 	},
+	"model": {
+		"message": "Model"
+	},
+	"modelNotFound": {
+		"message": "Model not found."
+	},
 	"models": {
 		"message": "Models"
 	},
@@ -472,6 +514,9 @@
 	},
 	"noHighlights": {
 		"message": "Do nothing"
+	},
+	"noModelsConfigured": {
+		"message": "No models configured. Please add a model in Interpreter settings."
 	},
 	"noTemplates": {
 		"message": "No templates available. Please add a template in the settings."
@@ -541,6 +586,9 @@
 	"pageCannotBeClipped": {
 		"message": "This page cannot be clipped."
 	},
+	"pageUrl": {
+		"message": "Page URL"
+	},
 	"pageVariables": {
 		"message": "Page variables"
 	},
@@ -561,6 +609,12 @@
 	},
 	"popularModelsDescription": {
 		"message": "Choose from commonly used models or enter custom model details."
+	},
+	"pleaseEnterUrl": {
+		"message": "Please enter a URL."
+	},
+	"pleaseSelectModel": {
+		"message": "Please select a model."
 	},
 	"popup": {
 		"message": "Popup"

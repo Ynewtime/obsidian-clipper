@@ -132,6 +132,55 @@ export function createDefaultTemplate(): Template {
 	};
 }
 
+/**
+ * Creates a comprehensive blog template with all common frontmatter fields.
+ * Inspired by popular static site generators: Hugo, Hexo, Jekyll, Astro, VuePress, 11ty, Gatsby.
+ */
+export function createBlogTemplate(): Template {
+	const generateId = () => Date.now().toString() + Math.random().toString(36).slice(2, 11);
+
+	return {
+		id: generateId(),
+		name: getMessage('blogTemplateName') || 'Blog',
+		behavior: 'create',
+		noteNameFormat: '{{title|safe_name}}',
+		path: 'Blogs',
+		noteContentFormat: '{{content}}',
+		context: "",
+		properties: [
+			// Core metadata
+			{ id: generateId(), name: 'title', value: '{{title}}' },
+			{ id: generateId(), name: 'author', value: '{{author|split:", "|wikilink|join}}' },
+			{ id: generateId(), name: 'published', value: '{{published}}' },
+			{ id: generateId(), name: 'description', value: '{{description}}' },
+
+			// Categorization
+			{ id: generateId(), name: 'categories', value: '{{prompt:"Based on the article content, suggest 1-3 relevant categories. Return as comma-separated values."}}' },
+			{ id: generateId(), name: 'tags', value: '{{prompt:"Based on the article content, suggest 3-5 relevant tags. Return as comma-separated values."}}' },
+
+			// Media
+			{ id: generateId(), name: 'cover', value: '{{image}}' },
+			{ id: generateId(), name: 'favicon', value: '{{favicon}}' },
+
+			// Source info
+			{ id: generateId(), name: 'source', value: '{{url}}' },
+			{ id: generateId(), name: 'site', value: '{{site}}' },
+			{ id: generateId(), name: 'domain', value: '{{domain}}' },
+
+			// Reading stats
+			{ id: generateId(), name: 'word_count', value: '{{words}}' },
+			{ id: generateId(), name: 'reading_time', value: '{{prompt:"Calculate reading time based on {{words}} words. Return just the number of minutes."}} min' },
+
+			// Dates
+			{ id: generateId(), name: 'created', value: '{{date}}' },
+
+			// Language
+			{ id: generateId(), name: 'lang', value: '{{meta:property:og:locale}}' }
+		],
+		triggers: []
+	};
+}
+
 export function getEditingTemplateIndex(): number {
 	return editingTemplateIndex;
 }
