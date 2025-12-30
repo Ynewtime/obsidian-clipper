@@ -26,6 +26,18 @@
 	"advanced": {
 		"message": "高级"
 	},
+	"aiGenerateTemplate": {
+		"message": "AI 分析页面"
+	},
+	"aiTemplateModelDescription": {
+		"message": "选择用于分析的 AI 模型。"
+	},
+	"aiTemplateTitle": {
+		"message": "AI 模板生成器"
+	},
+	"aiTemplateUrlDescription": {
+		"message": "输入要分析的页面 URL。AI 将推荐用于提取内容的 CSS 选择器。"
+	},
 	"allProperties": {
 		"message": "所有属性"
 	},
@@ -49,6 +61,18 @@
 	},
 	"appendToExisting": {
 		"message": "添加到现有笔记末尾"
+	},
+	"applyToTemplate": {
+		"message": "应用到模板"
+	},
+	"analyze": {
+		"message": "分析"
+	},
+	"analysisResult": {
+		"message": "分析结果"
+	},
+	"analyzing": {
+		"message": "正在分析..."
 	},
 	"autoRunInterpreter": {
 		"message": "自动运行"
@@ -126,6 +150,12 @@
 	},
 	"confirmReplaceSettings": {
 		"message": "这将替换您当前的所有设置，包括模板和属性。您确定要继续吗？"
+	},
+	"blogTemplateName": {
+		"message": "博客"
+	},
+	"createBlogTemplate": {
+		"message": "创建博客模板"
 	},
 	"copied": {
 		"message": "已复制！"
@@ -316,6 +346,9 @@
 	"failedToSaveProvider": {
 		"message": "无法保存提供商。请再试一次。"
 	},
+	"failedToSaveTemplate": {
+		"message": "无法保存模板。请再试一次。"
+	},
 	"feedback": {
 		"message": "反馈"
 	},
@@ -422,6 +455,9 @@
 			}
 		}
 	},
+	"interpreterNotEnabled": {
+		"message": "请先在设置中启用解释器。"
+	},
 	"language": {
 		"message": "语言"
 	},
@@ -458,6 +494,12 @@
 	"modelRequiredFields": {
 		"message": "模型名称、提供商和模型 ID 是必需的。"
 	},
+	"model": {
+		"message": "模型"
+	},
+	"modelNotFound": {
+		"message": "未找到模型。"
+	},
 	"models": {
 		"message": "模型"
 	},
@@ -472,6 +514,9 @@
 	},
 	"noHighlights": {
 		"message": "不执行任何操作"
+	},
+	"noModelsConfigured": {
+		"message": "未配置模型。请在解释器设置中添加模型。"
 	},
 	"noTemplates": {
 		"message": "没有可用的模板。请在设置中添加模板。"
@@ -541,6 +586,9 @@
 	"pageCannotBeClipped": {
 		"message": "无法剪藏此页面。"
 	},
+	"pageUrl": {
+		"message": "页面 URL"
+	},
 	"pageVariables": {
 		"message": "页面变量"
 	},
@@ -561,6 +609,12 @@
 	},
 	"popularModelsDescription": {
 		"message": "从常用模型中选择，或输入自定义模型详细信息。"
+	},
+	"pleaseEnterUrl": {
+		"message": "请输入 URL。"
+	},
+	"pleaseSelectModel": {
+		"message": "请选择模型。"
 	},
 	"popup": {
 		"message": "弹出窗口"
