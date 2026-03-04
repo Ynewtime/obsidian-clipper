@@ -59,6 +59,9 @@
 	"behavior": {
 		"message": "התנהגות"
 	},
+	"behaviorWarning": {
+		"message": "הוספה לפתק קיים או יומי דורשת Obsidian 1.7.2 ומעלה."
+	},
 	"byDay": {
 		"message": "יום"
 	},
@@ -100,14 +103,6 @@
 			},
 			"strong_start": {
 				"content": "<strong>"
-			}
-		}
-	},
-	"clipboardError": {
-		"message": "ל-Obsidian אין אפשרות לגשת ללוח שלך. נסה את הוראות פתרון הבעיות כאן: $1",
-		"placeholders": {
-			"1": {
-				"content": "$1"
 			}
 		}
 	},
@@ -772,12 +767,6 @@
 	"templateCopyError": {
 		"message": "נכשל בהעתקת ה-JSON של התבנית ללוח"
 	},
-	"templateErrorCount": {
-		"message": "יש שגיאה בתבנית שלך."
-	},
-	"templateErrorsCount": {
-		"message": "יש $1 שגיאות בתבנית שלך."
-	},
 	"templateName": {
 		"message": "שם התבנית"
 	},
@@ -792,9 +781,6 @@
 	},
 	"templateTriggersDescription": {
 		"message": "הגדר כללים לבחירה אוטומטית של תבנית זו אם היא תואמת לתבנית URL או מכילה נתוני schema.org. כלל אחד בכל שורה."
-	},
-	"templateValid": {
-		"message": "תחביר התבנית תקין"
 	},
 	"templatesHeading": {
 		"message": "תבניות"

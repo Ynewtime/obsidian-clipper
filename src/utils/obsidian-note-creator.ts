@@ -3,7 +3,6 @@ import { escapeDoubleQuotes, sanitizeFileName } from '../utils/string-utils';
 import { Template, Property } from '../types/types';
 import { generalSettings, incrementStat } from './storage-utils';
 import { copyToClipboard } from './clipboard-utils';
-import { getMessage } from './i18n';
 
 export async function generateFrontmatter(properties: Property[]): Promise<string> {
 	let frontmatter = '---\n';
@@ -83,7 +82,7 @@ async function tryClipboardWrite(fileContent: string, obsidianUrl: string): Prom
 	const success = await copyToClipboard(fileContent);
 	
 	if (success) {
-		obsidianUrl += `&clipboard&content=${encodeURIComponent(getMessage('clipboardError', 'https://help.obsidian.md/web-clipper/troubleshoot'))}`;
+		obsidianUrl += `&clipboard`;
 		openObsidianUrl(obsidianUrl);
 		console.log('Obsidian URL:', obsidianUrl);
 	} else {

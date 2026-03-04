@@ -1,13 +1,4 @@
 import { debugLog } from '../debug';
-import type { ParamValidationResult } from '../filters';
-
-export const validateTemplateParams = (param: string | undefined): ParamValidationResult => {
-	if (!param) {
-		return { valid: false, error: 'requires a template string (e.g., template:"${name}")' };
-	}
-
-	return { valid: true };
-};
 
 export const template = (input: string | any[], param?: string): string => {
 	debugLog('Template', 'Template input:', input);
@@ -21,7 +12,7 @@ export const template = (input: string | any[], param?: string): string => {
 	// Remove outer parentheses if present
 	param = param.replace(/^\((.*)\)$/, '$1');
 	// Remove surrounding quotes (both single and double)
-	param = param.replace(/^(['"])([\s\S]*)\1$/, '$2');
+	param = param.replace(/^(['"])(.*)\1$/, '$2');
 
 	let obj: any[] = [];
 	if (typeof input === 'string') {
@@ -50,18 +41,13 @@ function replaceTemplateVariables(obj: any, template: string): string {
 	debugLog('Template', 'Replacing template variables for:', obj);
 	debugLog('Template', 'Template:', template);
 
-	// If obj is a plain string, make it available as ${str} for template compatibility
+	// If obj is a string that looks like an object, try to parse it
 	if (typeof obj === 'string') {
-		const strValue = obj;
 		try {
 			obj = parseObjectString(obj);
 			debugLog('Template', 'Parsed object:', obj);
 		} catch (error) {
 			debugLog('Template', 'Failed to parse object string:', obj);
-		}
-		// Ensure str property is set for plain strings
-		if (obj.str === undefined) {
-			obj.str = strValue;
 		}
 	}
 
@@ -71,6 +57,11 @@ function replaceTemplateVariables(obj: any, template: string): string {
 		debugLog('Template', 'Replaced with:', value);
 		return value !== undefined && value !== 'undefined' ? value : '';
 	});
+
+	// Handle the case where obj is a simple string (from string literal in map)
+	if (typeof obj === 'object' && obj.str) {
+		result = result.replace(/\$\{str\}/g, obj.str);
+	}
 
 	debugLog('Template', 'Result after variable replacement:', result);
 
